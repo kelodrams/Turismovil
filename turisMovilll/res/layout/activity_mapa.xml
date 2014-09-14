@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MapaActivity" >
+    
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.SupportMapFragment"/>
+
+      <Button
+          android:id="@+id/bNavigation"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignRight="@+id/map"
+          android:layout_alignTop="@+id/map"
+          android:layout_margin="5dp"
+           
+          android:text="Ir" />
+
+       
+
+      <EditText
+          android:id="@+id/atv_places"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignBaseline="@+id/bNavigation"
+          android:layout_alignBottom="@+id/bNavigation"
+          android:layout_alignLeft="@+id/map"
+          android:ems="10"
+          android:inputType="textPersonName" >
+
+          <requestFocus />
+      </EditText>
+
+</RelativeLayout>
