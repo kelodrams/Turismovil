@@ -58,8 +58,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-public class MapaActivity extends android.support.v4.app.FragmentActivity  implements OnMapClickListener, OnMapLongClickListener, OnMarkerClickListener, LocationListener, OnMyLocationChangeListener{
-
+public class MapaActivity extends android.support.v4.app.FragmentActivity  implements  OnMapLongClickListener, LocationListener, OnMyLocationChangeListener{
+  
 	
 	private static final LatLng AMSTERDAM = new LatLng(52.37518, 4.895439);
 	private static final LatLng PARIS = new LatLng(48.856132, 2.352448);
@@ -73,6 +73,9 @@ public class MapaActivity extends android.support.v4.app.FragmentActivity  imple
 	private boolean isTravelingToParis = false;
 	private int width, height;
 	private Marker markers;
+	private LatLng pos;
+	private LatLng posx;
+	
 	
 	 private LocationManager locationManager;
 	 GPSTracker gps;
@@ -87,7 +90,10 @@ public class MapaActivity extends android.support.v4.app.FragmentActivity  imple
 	    fragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
 	    
 		map = fragment.getMap(); 	
-		
+		  
+			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+			StrictMode.setThreadPolicy(policy); 
 		bNavigation = (Button) findViewById(R.id.bNavigation);
 		
 		if(gps.canGetLocation)
@@ -102,18 +108,63 @@ public class MapaActivity extends android.support.v4.app.FragmentActivity  imple
 		{
 			gps.showSettingsAlert();
 		}
-		  
 		
 		
-		  map.setMyLocationEnabled(true);
-	      map.setOnMyLocationChangeListener(this);
-	            
-		  
+		 List<NameValuePair> lista=new ArrayList<NameValuePair>();
+	        ConexionMysql jParse=new ConexionMysql();
+	        String URL="http://www.delexltda.cl/TURISMOVIL/marca.php";
+			JSONObject json=jParse.recibir(URL, "get", lista);
+			//Toast.makeText(getApplicationContext(), ""+json, Toast.LENGTH_LONG).show();
+			try{
+				
+				    
+				
+					JSONArray productos = null;
+					productos=json.getJSONArray("marcador");
+					String[] datos=new String[productos.length()];
+					Toast.makeText(getApplicationContext(), productos.length() + " Productos existentes", Toast.LENGTH_LONG).show();
+					
+					for(int t=0;t<productos.length();t++){
+						
+						
+						JSONObject c=productos.getJSONObject(t);
+						String imagen = c.getString("id");
+						String nombre=c.getString("titulo");
+						String latitud=c.getString("latitud");
+						String longitud = c.getString("longitud");
+						double lat = Double.parseDouble(latitud);
+						double lng = Double.parseDouble(longitud);
+						String id = c.getString("tipo");
+						map.addMarker(new MarkerOptions()
+									  .position(new LatLng(lat,lng))
+									  .title(nombre)
+						);
+						System.out.println(id+"   "+nombre);
+						//Toast.makeText(getApplicationContext(), nombre + "el nombre es "+latitud+longitud, Toast.LENGTH_LONG).show();
+					}
+				
+			}
+			catch(JSONException error){
+				Toast.makeText(getApplicationContext(), "error:"+error.getMessage(), Toast.LENGTH_LONG).show();
+			}             
+	       
+			
+			
+		  map.setOnMarkerClickListener(new OnMarkerClickListener() {
+			
+			@Override
+			public boolean onMarkerClick(Marker marker) {
+					//findDirections( gps.latitude, gps.longitude,markers.getPosition().latitude,markers.getPosition().longitude, GMapV2Direction.MODE_DRIVING );
+				Toast.makeText(getApplicationContext(), "Hice click en el marcador", Toast.LENGTH_LONG).show();
+				pos = new LatLng(marker.getPosition().latitude, marker.getPosition().longitude);
+				posx = new LatLng(gps.latitude, gps.longitude);
+				findDirections( gps.latitude, gps.longitude,marker.getPosition().latitude, marker.getPosition().longitude, GMapV2Direction.MODE_DRIVING );
+				
+				return false;
+			}
+		});
 		 
-		  
-		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
-		StrictMode.setThreadPolicy(policy); 
+	
 		 
 		
 		
@@ -156,16 +207,12 @@ public class MapaActivity extends android.support.v4.app.FragmentActivity  imple
 			newPolyline.remove();
 		}
 		newPolyline = map.addPolyline(rectLine);
-		if (isTravelingToParis)
-		{
-			latlngBounds = createLatLngBoundsObject(AMSTERDAM, PARIS);
+		 
+			latlngBounds = createLatLngBoundsObject(pos, posx);
 	        map.animateCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds, width, height, 150));
-		}
-		else
-		{
-			latlngBounds = createLatLngBoundsObject(AMSTERDAM, FRANKFURT);
-	        map.animateCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds, width, height, 150));
-		}
+		 
+			 
+		 
 		
 	}
 	
@@ -204,12 +251,13 @@ public class MapaActivity extends android.support.v4.app.FragmentActivity  imple
 	@Override
 	public void onMapLongClick(LatLng point) {
 		// TODO Auto-generated method stub
-		
+		Toast.makeText(getApplicationContext(), "Mantuve apretado", Toast.LENGTH_LONG).show();
 	}
 
-	@Override
+	 
 	public void onMapClick(LatLng point) {
-		// TODO Auto-generated method stub
+		
+		Toast.makeText(getApplicationContext(), "Hice click en el marcador", Toast.LENGTH_LONG).show();
 		
 	}
 	
@@ -241,13 +289,13 @@ private void obtenerItems(GoogleMap map) {
 					String longitud = c.getString("longitud");
 					double lat = Double.parseDouble(latitud);
 					double lng = Double.parseDouble(longitud);
-					int id = c.getInt("tipo");
+					String id = c.getString("tipo");
 					map.addMarker(new MarkerOptions()
 								  .position(new LatLng(lat,lng))
 								  .title(nombre)
 					);
 					System.out.println(id+"   "+nombre);
-					Toast.makeText(getApplicationContext(), nombre + "el nombre es "+latitud+longitud, Toast.LENGTH_LONG).show();
+					//Toast.makeText(getApplicationContext(), nombre + "el nombre es "+latitud+longitud, Toast.LENGTH_LONG).show();
 				}
 			
 		}
@@ -256,14 +304,6 @@ private void obtenerItems(GoogleMap map) {
 		}             
       }
 
-
-
-@Override
-public boolean onMarkerClick(Marker marker) {
-	// TODO Auto-generated method stub
-	markers.showInfoWindow();
-	return true;
-}
 
 
 
