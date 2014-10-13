@@ -74,15 +74,33 @@
             android:layout_alignTop="@+id/imageView3"
             android:src="@drawable/emergence" />
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="53dp"
-            android:layout_height="61dp"
-            android:layout_alignLeft="@+id/imageView2"
-            android:layout_below="@+id/imageView2"
-            android:layout_marginTop="26dp"
-            android:src="@drawable/salir" />
+         <ImageView
+             android:id="@+id/imageView3"
+             android:layout_width="53dp"
+             android:layout_height="61dp"
+             android:layout_alignLeft="@+id/imageView4"
+             android:layout_below="@+id/imageView4"
+             android:layout_marginTop="29dp"
+             android:src="@drawable/salir" />
 
+         <ImageView
+             android:id="@+id/imageView6"
+             android:layout_width="53dp"
+             android:layout_height="61dp"
+             android:layout_alignLeft="@+id/imageView2"
+             android:layout_alignTop="@+id/imageView3"
+             android:layout_marginLeft="14dp"
+             android:src="@drawable/compl" />
+
+         <ImageView
+             android:id="@+id/imageView7"
+             android:layout_width="53dp"
+             android:layout_height="61dp"
+             android:layout_alignLeft="@+id/imageView5"
+             android:layout_below="@+id/imageView5"
+             android:layout_marginTop="28dp"
+             android:src="@drawable/galeria" />
+        
     </RelativeLayout>
 
 </LinearLayout>

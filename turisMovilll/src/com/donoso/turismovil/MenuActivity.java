@@ -20,6 +20,8 @@ public class MenuActivity extends Activity{
 		final ImageView img_3 = (ImageView)findViewById(R.id.imageView3);
 		final ImageView img_4 = (ImageView)findViewById(R.id.imageView4);
 		final ImageView img_5 = (ImageView)findViewById(R.id.imageView5);
+		final ImageView img_6 = (ImageView)findViewById(R.id.imageView6);
+		final ImageView img_7 = (ImageView)findViewById(R.id.imageView7);
 	
 		
 		img_1.setOnClickListener(new View.OnClickListener() {
@@ -76,11 +78,36 @@ img_5.setOnClickListener(new View.OnClickListener() {
 	}
 });
 
-
-
-
-
+img_6.setOnClickListener(new View.OnClickListener() {
+	
+	@Override
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		Intent inicio_menu = new Intent(MenuActivity.this, MainActivity.class);
+		startActivity(inicio_menu);
 	}
+});
+
+
+
+
+
+	
+	img_7.setOnClickListener(new View.OnClickListener() {
+		
+		@Override
+		public void onClick(View arg0) {
+			// TODO Auto-generated method stub
+			Intent inicio_menu = new Intent(MenuActivity.this, ImagenesActivity.class);
+			startActivity(inicio_menu);
+		}
+	});
+
+
+
+
+
+		}
 	
 	
 

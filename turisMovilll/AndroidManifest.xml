@@ -88,6 +88,65 @@
             android:name="com.donoso.turismovil.ContrasenaActivity"
             android:label="@string/title_activity_emergen" >
         </activity>
+        <activity
+            android:name="com.donoso.turismovil.CustomAutoCompleteTextView"
+            android:label="@string/title_activity_emergen" >
+        </activity>
+        <activity
+            android:name="com.donoso.turismovil.MainActivity"
+            android:label="@string/title_activity_main" >
+        </activity>
+        <activity
+            android:name="com.donoso.turismovil.PlaceJSONParser"
+            android:label="@string/title_activity_emergen" >
+        </activity>
+         <activity
+            android:name="com.turismovil.clima.Location"
+            android:label="@string/title_activity_emergen" >
+        </activity>
+         <activity
+            android:name="com.turismovil.clima.Weather"
+            android:label="@string/title_activity_emergen" >
+        </activity>
+        <activity
+            android:name="com.donoso.turismovil.JSONWeather"
+            android:label="@string/title_activity_emergen" >
+        </activity>
+        <activity
+            android:name="com.donoso.turismovil.WeatherHttpClient"
+            android:label="@string/title_activity_emergen" >
+        </activity>
+        
+         
+         <activity
+            android:name="com.donoso.turismovil.ImagenesActivity"
+            android:label="@string/title_main" >
+        </activity>
+        <activity
+            android:name="com.donoso.turismovil.FileCache"
+            android:label="@string/title_main" >
+        </activity>
+        <activity
+            android:name="com.donoso.turismovil.ImageLoader"
+            android:label="@string/title_main" >
+        </activity>
+        <activity
+            android:name="com.donoso.turismovil.LazyAdapter"
+            android:label="@string/title_main" >
+        </activity>
+        <activity
+            android:name="com.donoso.turismovil.MemoryCache"
+            android:label="@string/title_main" >
+        </activity>
+        <activity
+            android:name="com.donoso.turismovil.Util"
+            android:label="@string/title_item" >
+        </activity>
+        <activity
+            android:name="com.donoso.turismovil.ClasificarActivity"
+            android:label="@string/title_activity_clasificar" >
+        </activity>
+        
     </application>
 
 </manifest>
